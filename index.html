@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="style.css">
+  <title>Map</title>
+  <style>
+      .control {
+      position: absolute;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .control.tilt {
+      top: 90px;
+    }
+
+    .control.rotation {
+      top: 135px;
+    }
+
+    .control.zoom {
+      top: 180px;
+    }
+
+    .control.zoom button{
+      font-weight: normal;
+    }
+
+    .control button {
+      width: 30px;
+      height: 30px;
+      margin: 15px 0 0 15px;
+      border: 1px solid #999999;
+      background: #ffffff;
+      opacity: 0.6;
+      border-radius: 5px;
+      box-shadow: 0 0 5px #666666;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .control button:hover {
+      opacity: 1;
+      cursor: pointer;
+    }   
+  </style>
+  <link rel="stylesheet" href="OSMBuildings.css">
+  <script src="OSMBuildings.js"></script>
+</head>
+
+<body>
+  <header>
+    <img src="logo1.svg" class="logo" alt="">
+  </header>
+<div id="map"></div>
+<div class="footer">
+  <a href="https://osmbuildings.org/" class="footer-item">© OSM Buildings</a>
+</div>  
+<div class="control tilt">
+  <button class="dec">&#8601;</button>
+  <button class="inc">&#8599;</button>
+</div>
+
+<div class="control rotation">
+  <button class="inc">&#8630;</button>
+  <button class="dec">&#8631;</button>
+</div>
+
+<div class="control zoom">
+  <button class="dec">-</button>
+  <button class="inc">+</button>
+</div>
+
+<script>
+  const osmb = new OSMBuildings({
+    container: 'map',
+    zoom: 16,
+    minZoom: 16,
+    maxZoom: 19,
+    position: { latitude:56.843037, longitude: 60.660755 },
+    state: true, // stores map position/rotation in url
+    attribution: '© 3D <a href="https://osmbuildings.org/copyright/">OSM Buildings</a>'
+  });
+  
+  function DrawGeoJSON(item)
+  {
+    var placetoadd = "http://localhost:8888/data" + item
+    osmb.addGeoJSON(placetoadd)
+  };
+
+  function DrawObject(item, latitude, longitude, id, rotation, scale)
+  {
+
+  };
+
+  
+  osmb.addMapTiles(
+    'http://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    {
+      attribution: '© Data <a href="https://openstreetmap.org/copyright/">OpenStreetMap</a> · © Map <a href="https://mapbox.com/">Mapbox</a>'
+    }
+  );
+
+  var places = ["/AkademKrasnolesye.geojson", "/Avtovokzal.geojson", "/Botanika.geojson",
+           "/Centre.geojson", "/ElizavetUktus.geojson","/Elmash.geojson",
+           "/Himmash.geojson","/NewSortirovka.geojson","/Uralmash.geojson",
+           "/NewSortirovka.geojson","/OldSortirovka.geojson","/Pionerskiy.geojson",
+           "/Shartash.geojson","/ShirokayaRechka.geojson",/*"/SiniekamniZBI.geojson"*/  ,
+           "/Vokzal.geojson","/VIZ.geojson","/Vtorchermet.geojson",
+           "/Vtuzgorodok.geojson", "/YugoZapad.geojson","/Zarechniy.geojson"];
+
+  var importantBuildings = ["GUK.obj", "Visockiy.obj", "SVRLD.obj", "Circus.obj"];
+  
+  //places.forEach(DrawGeoJSON)
+
+//osmb.addGeoJSONTiles("https://b.data.osmbuildings.org/0.2/anonymous/tile/{z}/{x}/{y}.json");
+osmb.addGeoJSON("http://localhost:8888/data/EKB.geojson");
+osmb.addOBJ("http://localhost:8888/assets/models/GUK.obj", { latitude: 56.843926, longitude: 60.65368 }, { id: "GUK", color: 'red', scale:1.75, rotation: -11});
+//osmb.addOBJ("http://localhost:8888/assets/models/Visockiy.obj", { latitude: 56.844029, longitude: 60.654014 }, { id: "Visockiy", color: 'red', scale:1});
+//osmb.addOBJ("http://localhost:8888/assets/models/SVRLD.obj", { latitude: 56.844029, longitude: 60.654014 }, { id: "Government", color: 'red', scale:1});
+//osmb.addOBJ("http://localhost:8888/assets/models/Circus.obj", { latitude: 56.844029, longitude: 60.654014 }, { id: "Circus", color: 'red', scale:2});
+
+  //**********************************'*****************************************
+
+  // on pointer up
+  osmb.on('pointerup', e => {
+    // if none, remove any previous selection and return
+    if (!e.features) {
+      osmb.highlight(feature => {});
+      return;
+    }
+
+    // store id's from seleted items...
+    const featureIDList = e.features.map(feature => feature.id);
+
+    // ...then is is faster: set highlight color for matching features
+    osmb.highlight(feature => {
+      if (featureIDList.indexOf(feature.id) > -1) {
+        return '#ffffff';
+      }
+    });
+  });
+
+  //***************************************************************************
+
+  const controlButtons = document.querySelectorAll('.control button');
+
+  controlButtons.forEach(button => {
+    button.addEventListener('click', e => {
+      const parentClassList = button.parentNode.classList;
+      const direction = button.classList.contains('inc') ? 1 : -1;
+      let increment, property;
+
+      if (parentClassList.contains('tilt')) {
+        property = 'Tilt';
+        increment = direction*10;
+      }
+      if (parentClassList.contains('rotation')) {
+        property = 'Rotation';
+        increment = direction*10;
+      }
+      if (parentClassList.contains('zoom')) {
+        property = 'Zoom';
+        increment = direction*1;
+      }
+      if (property) {
+        osmb['set'+ property](osmb['get'+ property]()+increment);
+      }
+    });
+  });
+</script>
+</body>
+</html>
