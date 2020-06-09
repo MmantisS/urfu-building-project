@@ -94,7 +94,7 @@
 
   function DrawObject(item, lat, long, name, rot, size, col)
   {
-    var objectToAdd = toAbsoluteURL + "/assets/models/" + item;
+    var objectToAdd = toAbsoluteURL + "/" + item;
     osmb.addOBJ(objectToAdd, {latitude: lat, longitude: long}, {id: name , scale: size, rotation: rot, color: col })
   };
 
