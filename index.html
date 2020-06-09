@@ -87,7 +87,7 @@
   
   function DrawGeoJSON(item)
   {
-    var placetoadd = "https://mmantiss.github.io/urfu-building-project/data" + item
+    var placetoadd = toAbsoluteURL + "/data" + item
     osmb.addGeoJSON(placetoadd)
   };
 
@@ -95,6 +95,7 @@
   {
 
   };
+  var toAbsoluteURL = "https://mmantiss.github.io/urfu-building-project"
 
   
   osmb.addMapTiles(
@@ -116,8 +117,8 @@
   
   places.forEach(DrawGeoJSON)
 
-osmb.addOBJ("https://mmantiss.github.io/urfu-building-project/assets/modelsGUK.obj", { latitude: 56.843926, longitude: 60.65368 }, { id: "GUK", color: 'red', scale:1.75, rotation: -11});
-osmb.addOBJ("${location.protocol}/${location.hostname}/${location.pathname}/assets/models/Visockiy.obj", { latitude: 56.836009, longitude: 60.614637 }, { id: "Visockiy", color: 'red', scale:1.75, rotation: -191});
+osmb.addOBJ( toAbsoluteURL+ "/assets/models/GUK.obj", { latitude: 56.843926, longitude: 60.65368 }, { id: "GUK", color: 'red', scale:1.75, rotation: -11});
+osmb.addOBJ( toAbsoluteURL + "/assets/models/Visockiy.obj", { latitude: 56.836009, longitude: 60.614637 }, { id: "Visockiy", color: 'red', scale:1.75, rotation: -191});
 
   //**********************************'*****************************************
 
