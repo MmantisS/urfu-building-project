@@ -48,6 +48,7 @@
   </style>
   <link rel="stylesheet" href="OSMBuildings.css">
   <script src="OSMBuildings.js"></script>
+  <script src="https://unpkg.com/geojson-vt@3.2.0/geojson-vt.js"></script>
 </head>
 
 <body>
@@ -86,7 +87,7 @@
   
   function DrawGeoJSON(item)
   {
-    var placetoadd = "https://github.com/MmantisS/urfu-building-project/blob/master" + item
+    var placetoadd = "https://mmantiss.github.io/urfu-building-project/data" + item
     osmb.addGeoJSON(placetoadd)
   };
 
@@ -115,8 +116,8 @@
   
   places.forEach(DrawGeoJSON)
 
-osmb.addOBJ("https://github.com/MmantisS/urfu-building-project/tree/master/assets/modelsGUK.obj", { latitude: 56.843926, longitude: 60.65368 }, { id: "GUK", color: 'red', scale:1.75, rotation: -11});
-//osmb.addOBJ("${location.protocol}/${location.hostname}/${location.pathname}/assets/models/Visockiy.obj", { latitude: 56.836009, longitude: 60.614637 }, { id: "Visockiy", color: 'red', scale:1.75, rotation: -191});
+osmb.addOBJ("https://mmantiss.github.io/urfu-building-project/assets/modelsGUK.obj", { latitude: 56.843926, longitude: 60.65368 }, { id: "GUK", color: 'red', scale:1.75, rotation: -11});
+osmb.addOBJ("${location.protocol}/${location.hostname}/${location.pathname}/assets/models/Visockiy.obj", { latitude: 56.836009, longitude: 60.614637 }, { id: "Visockiy", color: 'red', scale:1.75, rotation: -191});
 
   //**********************************'*****************************************
 
