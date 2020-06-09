@@ -80,13 +80,13 @@
     minZoom: 16,
     maxZoom: 19,
     position: { latitude:56.843037, longitude: 60.660755 },
-    state: true, // stores map position/rotation in url
+    state: false, // stores map position/rotation in url
     attribution: '© 3D <a href="https://osmbuildings.org/copyright/">OSM Buildings</a>'
   });
   
   function DrawGeoJSON(item)
   {
-    var placetoadd = "http://localhost:8888/data" + item
+    var placetoadd = "https://github.com/MmantisS/urfu-building-project/blob/master" + item
     osmb.addGeoJSON(placetoadd)
   };
 
@@ -107,20 +107,16 @@
            "/Centre.geojson", "/ElizavetUktus.geojson","/Elmash.geojson",
            "/Himmash.geojson","/NewSortirovka.geojson","/Uralmash.geojson",
            "/NewSortirovka.geojson","/OldSortirovka.geojson","/Pionerskiy.geojson",
-           "/Shartash.geojson","/ShirokayaRechka.geojson",/*"/SiniekamniZBI.geojson"*/  ,
+           "/Shartash.geojson","/ShirokayaRechka.geojson","/SiniekamniZBI.geojson"  ,
            "/Vokzal.geojson","/VIZ.geojson","/Vtorchermet.geojson",
            "/Vtuzgorodok.geojson", "/YugoZapad.geojson","/Zarechniy.geojson"];
 
   var importantBuildings = ["GUK.obj", "Visockiy.obj", "SVRLD.obj", "Circus.obj"];
   
-  //places.forEach(DrawGeoJSON)
+  places.forEach(DrawGeoJSON)
 
-//osmb.addGeoJSONTiles("https://b.data.osmbuildings.org/0.2/anonymous/tile/{z}/{x}/{y}.json");
-osmb.addGeoJSON("http://localhost:8888/data/EKB.geojson");
-osmb.addOBJ("http://localhost:8888/assets/models/GUK.obj", { latitude: 56.843926, longitude: 60.65368 }, { id: "GUK", color: 'red', scale:1.75, rotation: -11});
-//osmb.addOBJ("http://localhost:8888/assets/models/Visockiy.obj", { latitude: 56.844029, longitude: 60.654014 }, { id: "Visockiy", color: 'red', scale:1});
-//osmb.addOBJ("http://localhost:8888/assets/models/SVRLD.obj", { latitude: 56.844029, longitude: 60.654014 }, { id: "Government", color: 'red', scale:1});
-//osmb.addOBJ("http://localhost:8888/assets/models/Circus.obj", { latitude: 56.844029, longitude: 60.654014 }, { id: "Circus", color: 'red', scale:2});
+osmb.addOBJ("https://github.com/MmantisS/urfu-building-project/tree/master/assets/modelsGUK.obj", { latitude: 56.843926, longitude: 60.65368 }, { id: "GUK", color: 'red', scale:1.75, rotation: -11});
+//osmb.addOBJ("${location.protocol}/${location.hostname}/${location.pathname}/assets/models/Visockiy.obj", { latitude: 56.836009, longitude: 60.614637 }, { id: "Visockiy", color: 'red', scale:1.75, rotation: -191});
 
   //**********************************'*****************************************
 
