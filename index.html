@@ -84,18 +84,19 @@
     state: false, // stores map position/rotation in url
     attribution: '© 3D <a href="https://osmbuildings.org/copyright/">OSM Buildings</a>'
   });
+  var toAbsoluteURL = "https://mmantiss.github.io/urfu-building-project" 
   
   function DrawGeoJSON(item)
   {
-    var placetoadd = toAbsoluteURL + "/data" + item
-    osmb.addGeoJSON(placetoadd)
+    var placeToAdd = toAbsoluteURL + "/data" + item
+    osmb.addGeoJSON(placeToAdd)
   };
 
-  function DrawObject(item, latitude, longitude, id, rotation, scale)
+  function DrawObject(item, lat, long, name, rot, size, col)
   {
-
+    var objectToAdd = toAbsoluteURL + "/assets/models/" + item;
+    osmb.addOBJ(objectToAdd, {latitude: lat, longitude: long}, {id: name , scale: size, rotation: rot, color: col })
   };
-  var toAbsoluteURL = "https://mmantiss.github.io/urfu-building-project"
 
   
   osmb.addMapTiles(
@@ -116,9 +117,8 @@
   var importantBuildings = ["GUK.obj", "Visockiy.obj", "SVRLD.obj", "Circus.obj"];
   
   places.forEach(DrawGeoJSON)
-
-osmb.addOBJ( toAbsoluteURL+ "/assets/models/GUK.obj", { latitude: 56.843926, longitude: 60.65368 }, { id: "GUK", color: 'red', scale:1.75, rotation: -11});
-osmb.addOBJ( toAbsoluteURL + "/assets/models/Visockiy.obj", { latitude: 56.836009, longitude: 60.614637 }, { id: "Visockiy", color: 'red', scale:1.75, rotation: -191});
+  DrawObject("GUK.obj", 56.843926, 60.65368, "GUK", -11, 1.75, 'red')
+  DrawObject("Visockiy.obj", 56.836009, 60.614637, "SkyScraper", -191, 1.75, 'red')
 
   //**********************************'*****************************************
 
